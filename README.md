@@ -1,12 +1,11 @@
 # Astro Starter — Recurring Event Website
 
-A production-ready starter template for recurring annual events (festivals, gatherings, meetups). Built with Astro, Tailwind CSS v4, Cloudinary, and deployed on Vercel.
+A production-ready starter template for recurring annual events (festivals, gatherings, meetups). Built with Astro, Tailwind CSS v4, and deployed on Vercel.
 
 ## Stack
 
 - **[Astro 5](https://astro.build)** — Static site generator with MDX content collections
 - **[Tailwind CSS v4](https://tailwindcss.com)** + **[tailwindcss-motion](https://rombo.co/tailwind/)** — Styling and animations
-- **[Cloudinary](https://cloudinary.com)** via `astro-cloudinary` — Image hosting and optimization
 - **[@vercel/og](https://vercel.com/docs/functions/og-image-generation)** — Dynamic OG image generation
 - **[Swup](https://swup.js.org)** — Smooth page transitions
 - **[Vercel](https://vercel.com)** — Hosting with Web Analytics
@@ -46,17 +45,24 @@ Copy `.env.example` to `.env` and fill in:
 ```env
 SITE_URL=https://your-site.com
 ENV_NAME=production
-PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
 UMAMI_SITE_ID=your_umami_id   # optional
 ```
 
-### 2. Set up Cloudinary
+### 2. Add your images
 
-- Create a free [Cloudinary](https://cloudinary.com) account
-- Create folders named by year (e.g. `2023`, `2024`) for gallery images
-- Upload your images to those folders — the gallery is auto-populated
+Place images in the `public/images/` directory, organised by year:
+
+```
+public/
+└── images/
+    ├── 2023/
+    │   ├── cover.jpg
+    │   ├── 01.jpg
+    │   └── ...
+    ├── 2024/
+    │   └── ...
+    └── ...
+```
 
 ### 3. Add your content
 
@@ -66,9 +72,12 @@ Edit or add MDX files in `src/content/events/`. Each file maps to one edition:
 ---
 startDate: 2026-07-18T18:00:00
 endDate: 2026-07-18T23:59:00
-cover: https://res.cloudinary.com/YOUR_CLOUD/image/upload/your-image.jpg
+cover: /images/2026/cover.jpg
 claim: "A short, evocative tagline for this edition."
 externalLink: https://facebook.com/your-event  # optional
+images:
+  - /images/2026/01.jpg
+  - /images/2026/02.jpg
 performers:
   - name: Band Name
     genre: indie rock

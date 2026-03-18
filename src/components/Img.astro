@@ -1,6 +1,4 @@
 ---
-import { CldImage } from 'astro-cloudinary'
-
 type Props = {
   src: string
   alt: string
@@ -9,12 +7,11 @@ type Props = {
 const { src, alt } = Astro.props
 ---
 
-<CldImage
+<img
   src={src}
   alt={alt}
   class="h-full w-full rounded-lg"
-  sizes="(min-width: 600px) 544px, calc(100vw - 4rem)"
   width={544}
   height={350}
-  flags={['progressive']}
+  loading="lazy"
 />

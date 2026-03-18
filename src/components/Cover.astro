@@ -1,7 +1,4 @@
 ---
-import { CldImage } from 'astro-cloudinary'
-import { getCldImageUrl } from 'astro-cloudinary/helpers'
-
 type Props = {
   image: string
   title: string
@@ -10,19 +7,16 @@ type Props = {
 }
 
 const { image, title, subtitle, subsubtitle } = Astro.props
-
-const imageUrl = getCldImageUrl({ src: image, width: 1088, height: 725 })
 ---
 
-<CldImage
-  src={imageUrl}
+<img
+  src={image}
   alt=""
   id="cover-img"
   class="motion-opacity-in-0 motion-blur-in-xs motion-duration-1400 h-full w-full rounded-lg"
-  sizes="(min-width: 1150px) 1088px, calc(100vw - 4rem)"
   width={1088}
   height={725}
-  flags={['progressive']}
+  loading="eager"
 />
 
 <h1 class="font-head relative z-20 -mt-[13vw] pl-4 sm:-mt-32">

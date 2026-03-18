@@ -1,12 +1,10 @@
 ---
-import { CldImage } from 'astro-cloudinary'
-
 type Props = {
-  imagePublicUrls: string[]
+  imageUrls: string[]
   galleryId: string
 }
 
-const { imagePublicUrls, galleryId } = Astro.props
+const { imageUrls, galleryId } = Astro.props
 ---
 
 <dialog
@@ -61,17 +59,15 @@ const { imagePublicUrls, galleryId } = Astro.props
     class="relative z-10 flex h-full min-w-0 flex-1 items-center justify-center p-8"
   >
     {
-      imagePublicUrls.map((id, index) => (
-        <CldImage
-          src={id}
+      imageUrls.map((url, index) => (
+        <img
+          src={url}
           alt=""
           width={1920}
           height={1280}
-          crop="fit"
           loading="lazy"
           data-index={index}
           class="hidden max-h-full max-w-full rounded-lg object-contain"
-          flags={['progressive']}
         />
       ))
     }

@@ -18,18 +18,6 @@ export const envConfig = {
       access: "public",
       default: "staging",
     }),
-    PUBLIC_CLOUDINARY_CLOUD_NAME: envField.string({
-      context: "client",
-      access: "public",
-    }),
-    CLOUDINARY_API_KEY: envField.string({
-      context: "client",
-      access: "public",
-    }),
-    CLOUDINARY_API_SECRET: envField.string({
-      context: "client",
-      access: "public",
-    }),
     UMAMI_SITE_ID: envField.string({
       context: "client",
       access: "public",

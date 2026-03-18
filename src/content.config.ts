@@ -1,7 +1,4 @@
-import { readdirSync } from 'fs'
-import { join } from 'path'
 import { defineCollection, z } from 'astro:content'
-import { cldAssetsLoader } from 'astro-cloudinary/loaders'
 import { glob } from 'astro/loaders'
 
 const events = defineCollection({
@@ -35,24 +32,4 @@ const events = defineCollection({
   }),
 })
 
-const eventsDir = join(process.cwd(), 'src/content/events')
-
-const eventIds = readdirSync(eventsDir)
-  .filter((f) => f.endsWith('.mdx'))
-  .map((f) => f.replace('.mdx', ''))
-  .slice(0, -1)
-
-const galleryCollections = Object.fromEntries(
-  eventIds.map((id) => [
-    `gallery${id}`,
-    defineCollection({
-      loader: cldAssetsLoader({
-        limit: 500,
-        folder: id,
-        tags: true,
-      }),
-    }),
-  ]),
-)
-
-export const collections = { events, ...galleryCollections }
+export const collections = { events }

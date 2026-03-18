@@ -1,5 +1,4 @@
 ---
-import { CldImage } from "astro-cloudinary";
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
@@ -18,7 +17,7 @@ const { season, isActive, editionNumber } = Astro.props;
   ]}
   href={`/event/${season.id}`}
 >
-  <CldImage
+  <img
     src={season.data.cover}
     alt=""
     class:list={[
@@ -27,9 +26,9 @@ const { season, isActive, editionNumber } = Astro.props;
         ? "scale-118"
         : "group-hover:scale-118 transition-transform duration-700",
     ]}
-    sizes="(max-width: 640px) 400px, (max-width: 1024px) 800px, 1200px"
     width={264}
     height={176}
+    loading="lazy"
   />
   <p class="flex flex-col ml-2 gap-2 font-head -mt-11 relative">
     <span class="text-3xl text-white">Edition {editionNumber}</span>
