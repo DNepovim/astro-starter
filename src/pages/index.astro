@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from 'astro:content'
+
+import A from '@/components/A.astro'
+import Claim from '@/components/Claim.astro'
+import Cover from '@/components/Cover.astro'
+import EventSchema from '@/components/EventSchema.astro'
+import Gallery from '@/components/Gallery.astro'
+import H2 from '@/components/H2.astro'
+import H3 from '@/components/H3.astro'
+import Hr from '@/components/Hr.astro'
+import Img from '@/components/Img.astro'
+import ItemsLine from '@/components/ItemsLine.astro'
+import P from '@/components/P.astro'
+import Seasons from '@/components/Seasons.astro'
+import Ul from '@/components/Ul.astro'
+import Layout from '@/layouts/Layout.astro'
+
+const allEvents = (await getCollection('events')).toSorted(
+  (a, b) => Number(b.id) - Number(a.id),
+)
+const post = allEvents[0]
+
+if (!post) {
+  return
+}
+
+const editionNumber = allEvents.length
+
+const { Content } = await render(post)
+---
+
+<Layout
+  currentEventId={post.id}
+  description={post.data.claim}
+  image={`/og/${post.id}.jpg`}
+>
+  <EventSchema slot="head" post={post} editionNumber={editionNumber} url={Astro.url} />
+  <Cover
+    image={post.data.cover}
+    title="My Site"
+    subtitle="A recurring event"
+    subsubtitle={`${post.data.startDate.toLocaleDateString('en-US')}, 18:00`}
+  />
+  {post.data.performers && <ItemsLine items={post.data.performers} />}
+
+  <Claim claim={post.data.claim} />
+
+  <div class="mx-auto max-w-xl px-4">
+    <Seasons />
+    <Content
+      components={{
+        h2: H2,
+        h3: H3,
+        p: P,
+        a: A,
+        ul: Ul,
+        img: Img,
+        hr: Hr,
+      } as Record<string, unknown>}
+    />
+  </div>
+
+  <Gallery year={post.id} />
+</Layout>

@@ -1,0 +1,74 @@
+---
+import { CldImage } from 'astro-cloudinary'
+import { getCldImageUrl } from 'astro-cloudinary/helpers'
+
+type Props = {
+  image: string
+  title: string
+  subtitle?: string
+  subsubtitle?: string
+}
+
+const { image, title, subtitle, subsubtitle } = Astro.props
+
+const imageUrl = getCldImageUrl({ src: image, width: 1088, height: 725 })
+---
+
+<CldImage
+  src={imageUrl}
+  alt=""
+  id="cover-img"
+  class="motion-opacity-in-0 motion-blur-in-xs motion-duration-1400 h-full w-full rounded-lg"
+  sizes="(min-width: 1150px) 1088px, calc(100vw - 4rem)"
+  width={1088}
+  height={725}
+  flags={['progressive']}
+/>
+
+<h1 class="font-head relative z-20 -mt-[13vw] pl-4 sm:-mt-32">
+  <span
+    class="motion-opacity-in-0 motion-translate-x-in-[-2rem] motion-duration-700 motion-delay-200 inline-block text-[9vw] text-white transition-colors sm:text-[5rem]"
+    >{title}</span
+  >
+  {
+    subtitle && (
+      <span class="motion-opacity-in-0 motion-translate-x-in-[-2rem] motion-duration-700 motion-delay-400 font-head relative mb-4 block overflow-hidden text-[5vw] sm:text-[3rem]">
+        {subtitle}
+      </span>
+    )
+  }
+</h1>
+
+<p
+  class="motion-opacity-in-0 motion-translate-x-in-[-2rem] motion-duration-700 motion-delay-600 mb-4 flex items-center gap-4 px-4 text-lg font-thin sm:text-xl"
+>
+  {subsubtitle && <span>{subsubtitle}</span>}
+</p>
+
+<script>
+  const img = document.getElementById('cover-img')
+  if (img) {
+    const maxBlur = 20
+    let viewportHeight = window.innerHeight
+
+    const update = () => {
+      const scrollY = window.scrollY
+      const blurStart = viewportHeight / 3
+      const blurEnd = (viewportHeight * 2) / 3
+      let blur = 0
+      if (scrollY >= blurEnd) blur = maxBlur
+      else if (scrollY > blurStart)
+        blur = ((scrollY - blurStart) / (blurEnd - blurStart)) * maxBlur
+      img.style.filter = `blur(${blur}px)`
+    }
+
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener(
+      'resize',
+      () => {
+        viewportHeight = window.innerHeight
+      },
+      { passive: true },
+    )
+  }
+</script>

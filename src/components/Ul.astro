@@ -1,0 +1,11 @@
+---
+type Props = {
+  className?: string;
+};
+
+const { className } = Astro.props;
+---
+
+<ul class={`mb-10 text-lg ${String(className ?? "")}`}>
+  <slot />
+</ul>

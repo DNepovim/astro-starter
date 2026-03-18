@@ -1,0 +1,22 @@
+# Project Rules
+
+## Tech Stack
+- Astro framework: https://docs.astro.build/llms-full.txt
+- Svelte components: https://svelte.dev/llms-full.txt
+- Package manager: yarn
+
+## Code Style
+- Write functional, immutable code
+- Prefer pure functions and avoid side effects
+- Use `const` over `let` when possible
+- Avoid mutating data structures; create new ones instead
+- Use array methods like `map`, `filter`, `reduce` instead of loops with mutations
+- Do not use eslint-disable comments; fix the underlying issue instead
+
+## Svelte
+- Use Svelte 5 event syntax without colons: `onclick`, `onload`, `onsubmit` (not `on:click`, `on:load`, `on:submit`)
+
+## Quality Checks
+- At the end of every task, run and fix:
+  - ESLint errors: `yarn eslint src --fix`
+  - TypeScript errors: `yarn astro check`

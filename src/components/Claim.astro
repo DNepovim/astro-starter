@@ -1,0 +1,19 @@
+---
+import P from "@/components/P.astro"
+
+type Props = {
+  claim?: string;
+};
+
+const { claim } = Astro.props;
+---
+
+{
+  claim && (
+    <div class="max-w-[46rem] mx-auto my-12 px-4 sm:px-8">
+      <P className="text-2xl">
+        <i>{claim}</i>
+      </P>
+    </div>
+  )
+}

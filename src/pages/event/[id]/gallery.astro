@@ -1,0 +1,51 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+
+import Gallery from '@/components/Gallery.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('events')
+  const now = new Date()
+  const sorted = [...posts]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .filter((post) => post.data.startDate <= now)
+  return sorted.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, editionNumber: index + 1 },
+  }))
+}
+
+type Props = {
+  post: CollectionEntry<'events'>
+  editionNumber: number
+}
+
+const { post, editionNumber } = Astro.props
+---
+
+<Layout
+  title={`Photos | Edition ${String(editionNumber)} — ${post.id}`}
+  description={post.data.claim}
+>
+  <link
+    slot="head"
+    rel="canonical"
+    href={new URL(`/event/${post.id}`, Astro.url).href}
+  />
+  <header class="relative mb-52 flex justify-between">
+    <a href="/" class="flex flex-col gap-1 sm:gap-4">
+      <span class="font-head text-[7vw] sm:text-5xl">My Site</span>
+      <span class="font-head text-[4vw] sm:text-3xl">A recurring event</span>
+    </a>
+    <h1 class="flex flex-col gap-1 text-right sm:gap-4">
+      <span class="font-head text-[7vw] sm:text-5xl">
+        Edition {editionNumber}
+      </span>
+      <span class="font-head text-[4vw] sm:text-3xl">
+        {post.data.startDate.toLocaleDateString('en-US')}
+      </span>
+    </h1>
+  </header>
+  <Gallery year={post.id} />
+</Layout>

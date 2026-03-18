@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import FacebookIcon from "@/components/FacebookIcon.astro";
+import SeasonTile from "@/components/SeasonTile.astro";
+
+type Props = {
+  currentEventId?: string;
+};
+
+const { currentEventId } = Astro.props;
+
+const events = (await getCollection("events")).toSorted(
+  (a, b) => Number(b.id) - Number(a.id),
+);
+const sortedAsc = [...events].reverse();
+const [currentEvent] = events;
+const activeEventId = currentEventId ?? currentEvent?.id;
+---
+
+<footer
+  class="mt-16 border-t border-gray-300 px-4 text-xl flex flex-col gap-32 py-8"
+>
+  <div class="flex max-lg:flex-wrap justify-center gap-4">
+    {
+      events.map((e) => (
+        <SeasonTile
+          season={e}
+          isActive={activeEventId === e.id}
+          editionNumber={sortedAsc.findIndex((x) => x.id === e.id) + 1}
+        />
+      ))
+    }
+  </div>
+  <div class="justify-around flex flex-col gap-4 md:flex-row md:items-center">
+    {
+      currentEvent?.data.externalLink && (
+        <>
+          <a
+            class="flex gap-2 items-start"
+            href={currentEvent.data.externalLink}
+            target="_blank"
+          >
+            <FacebookIcon class="w-6 h-6 mt-1" />
+            <span>Follow on Facebook</span>
+          </a>
+          <span class="hidden md:block flex-1 bg-gray-700 h-[0.5px]" />
+        </>
+      )
+    }
+
+    <a
+      class="flex gap-2 items-start"
+      href="mailto:hello@example.com"
+      target="_blank"
+    >
+      <Icon name="ph:envelope-simple" class="w-6 h-6 mt-1" />
+      hello@example.com
+    </a>
+    <span class="hidden md:block flex-1 bg-gray-700 h-[0.5px]"></span>
+
+    <a
+      class="flex gap-2 items-start"
+      href="#"
+      target="_blank"
+    >
+      <Icon name="ph:map-pin" class="w-6 h-6 mt-1" />
+      123 Main St, Your City
+    </a>
+  </div>
+</footer>

@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+
+@theme {
+  --font-head: "Playfair Display", "serif";
+  --font-head-solid: "Playfair Display", "serif";
+  --font-text: "Inter", "sans-serif";
+}

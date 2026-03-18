@@ -1,0 +1,20 @@
+---
+type Props = {
+  items: { name: string }[]
+}
+
+const { items } = Astro.props
+---
+
+<p
+  class="text-md mt-8 mb-8 flex items-center gap-4 px-4 font-thin max-sm:flex-wrap sm:text-2xl"
+>
+  {
+    items.map(({ name }, i) => (
+      <>
+        <span class="whitespace-nowrap">{name}</span>
+        {i < items.length - 1 && <span class="h-[0.5px] flex-1 bg-gray-700" />}
+      </>
+    ))
+  }
+</p>

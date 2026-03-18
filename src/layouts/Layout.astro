@@ -1,0 +1,53 @@
+---
+import Analytics from "@vercel/analytics/astro";
+import Footer from "@/components/Footer.astro";
+import MetaTags from "@/components/MetaTags.astro";
+import "@/styles/global.css";
+import { UMAMI_SITE_ID } from "astro:env/client";
+import favicon from "@/favicon.svg";
+
+const SITE_TITLE = "My Site";
+
+type Props = {
+  currentEventId?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+const { currentEventId, title, description, image } = Astro.props;
+
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+
+const config = {
+  url: "https://cloud.umami.is/script.js",
+  websiteId: UMAMI_SITE_ID,
+} as const;
+---
+
+<!doctype html>
+<html lang="en" class="font-text">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={favicon.src} />
+    <meta name="generator" content={Astro.generator} />
+    <MetaTags title={pageTitle} description={description} image={image} url={Astro.url.href} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Playfair+Display:wght@400;700&display=swap"
+    />
+    <script is:inline defer src={config.url} data-website-id={config.websiteId}
+    ></script>
+    <slot name="head" />
+  </head>
+  <body>
+    <Analytics />
+    <main id="swup" class="max-w-6xl mx-auto pt-2 sm:pt-4 pb-20 px-1 sm:px-8">
+      <slot />
+      <Footer currentEventId={currentEventId} />
+    </main>
+  </body>
+</html>

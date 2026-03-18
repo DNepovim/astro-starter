@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { buildEventSchema } from "@/utils/schema";
+
+type Props = {
+  post: CollectionEntry<"events">;
+  editionNumber: number;
+  url: URL;
+};
+
+const { post, editionNumber, url } = Astro.props;
+
+const schema = buildEventSchema(post, editionNumber, url);
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

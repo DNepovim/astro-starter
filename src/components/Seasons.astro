@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import H2 from "@/components/H2.astro";
+import SeasonTile from "@/components/SeasonTile.astro";
+
+const events = await getCollection("events");
+const sortedDesc = events.toSorted((a, b) => Number(b.id) - Number(a.id));
+const sortedAsc = [...sortedDesc].reverse();
+const [_, ...prevEvents] = sortedDesc;
+---
+
+<section>
+  <H2>Previous Editions</H2>
+  <div class="grid sm:grid-cols-2 gap-4">
+    {prevEvents.map((e) => (
+      <SeasonTile
+        season={e}
+        editionNumber={sortedAsc.findIndex((x) => x.id === e.id) + 1}
+      />
+    ))}
+  </div>
+</section>

@@ -1,0 +1,89 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+
+import A from '@/components/A.astro'
+import Claim from '@/components/Claim.astro'
+import Cover from '@/components/Cover.astro'
+import EventSchema from '@/components/EventSchema.astro'
+import Gallery from '@/components/Gallery.astro'
+import H2 from '@/components/H2.astro'
+import H3 from '@/components/H3.astro'
+import Hr from '@/components/Hr.astro'
+import Img from '@/components/Img.astro'
+import ItemsLine from '@/components/ItemsLine.astro'
+import P from '@/components/P.astro'
+import Ul from '@/components/Ul.astro'
+import Layout from '@/layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('events')
+  const now = new Date()
+  const sorted = [...posts]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .filter((post) => post.data.startDate <= now)
+  return sorted.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, editionNumber: index + 1 },
+  }))
+}
+
+type Props = {
+  post: CollectionEntry<'events'>
+  editionNumber: number
+}
+
+const { post, editionNumber } = Astro.props
+const { Content } = await render(post)
+---
+
+<Layout
+  title={`Edition ${String(editionNumber)} — ${post.id}`}
+  description={post.data.claim}
+  image={`/og/${post.id}.jpg`}
+  currentEventId={post.id}
+>
+  <EventSchema slot="head" post={post} editionNumber={editionNumber} url={Astro.url} />
+  <header class="relative mb-[-6vw] ml-4 flex justify-between sm:-mb-9">
+    <a href="/" class="relative z-10 flex flex-col gap-1 sm:gap-4">
+      <span class="font-head text-[7vw] sm:text-5xl">My Site</span>
+      <span class="font-head text-[4vw] text-white sm:text-3xl">A recurring event</span>
+    </a>
+    <menu><li></li></menu>
+  </header>
+  <Cover
+    image={post.data.cover}
+    title={`Edition ${String(editionNumber)}`}
+    subtitle={post.data.startDate.toLocaleDateString('en-US')}
+  />
+  {post.data.performers && <ItemsLine items={post.data.performers} />}
+
+  <Claim claim={post.data.claim} />
+
+  <div class="mx-auto max-w-xl px-4">
+    <Content
+      components={{
+        h2: H2,
+        h3: H3,
+        p: P,
+        a: A,
+        ul: Ul,
+        img: Img,
+        hr: Hr,
+      } as Record<string, unknown>}
+    />
+  </div>
+  <section class="mt-16">
+    <div class="mx-auto max-w-xl px-4">
+      <H2>Photos</H2>
+    </div>
+    <Gallery year={post.id} isPromotion />
+    <div
+      class="relative flex justify-center after:absolute after:top-[52%] after:block after:h-[0.5px] after:w-80 after:bg-gray-700"
+    >
+      <a
+        class="relative z-10 my-8 bg-white px-4 py-4 text-center text-xl transition-colors duration-500 hover:bg-transparent"
+        href={`/event/${post.id}/gallery`}>All photos</a
+      >
+    </div>
+  </section>
+</Layout>

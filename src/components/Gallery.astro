@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content'
+import { CldImage } from 'astro-cloudinary'
+import { isDefined, isOneOf } from 'narrowland'
+
+import Lightbox from '@/components/Lightbox.astro'
+
+type Props = {
+  year: string
+  isPromotion?: boolean
+}
+
+const { year, isPromotion } = Astro.props
+
+const galleryId = `gallery-${year}`
+
+const isHigher = (index: number, pattern: number[], start = 0): boolean =>
+  pattern.includes((index - start) % (pattern[pattern.length - 1] ?? 0))
+
+const images = await getCollection(
+  `gallery${year as '2024'}`,
+  (i) => !isPromotion || isOneOf('promotion', (i.data.tags ?? []).filter(isDefined)),
+)
+---
+
+{
+  (
+    <>
+      <div class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3" id={galleryId}>
+        {images.map(({ data }, index) => (
+          <button
+            type="button"
+            class:list={[
+              'relative block w-full cursor-pointer overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left transition-opacity hover:opacity-90 max-md:aspect-3/2',
+              index === 0 && 'md:col-span-2 md:col-start-2 md:row-span-2',
+              index === 1 && 'md:col-start-1 md:mt-auto md:ml-auto md:w-2/3',
+              index === 2 && 'md:col-start-1',
+              isHigher(index, [0, 6, 14], 4) && 'md:col-span-2 md:row-span-2',
+              isHigher(index, [0, 6, 9, 12, 14]) && 'md:row-span-2',
+              isHigher(index, [0, 5]) && 'max-md:col-span-2',
+            ]}
+            data-gallery={galleryId}
+            data-index={index}
+            aria-label={`Open image ${String(index + 1)} in lightbox`}
+          >
+            <CldImage
+              src={data.url}
+              alt=""
+              width={800}
+              height={533}
+              class="size-full max-h-full max-w-full object-cover"
+              flags={['progressive']}
+            />
+          </button>
+        ))}
+      </div>
+      <Lightbox imagePublicUrls={images.map(({ data }) => data.url)} {galleryId} />
+    </>
+  )
+}
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>('[data-gallery][data-index]')
+    .forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index ?? '0', 10)
+        const galleryId = btn.dataset.gallery ?? ''
+        document.dispatchEvent(
+          new CustomEvent('gallery:open', { detail: { index, galleryId } }),
+        )
+      })
+    })
+</script>
