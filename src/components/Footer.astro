@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import FacebookIcon from "@/components/FacebookIcon.astro";
 import SeasonTile from "@/components/SeasonTile.astro";
+import * as m from "@/paraglide/messages";
 
 type Props = {
   currentEventId?: string;
@@ -42,7 +43,7 @@ const activeEventId = currentEventId ?? currentEvent?.id;
             target="_blank"
           >
             <FacebookIcon class="w-6 h-6 mt-1" />
-            <span>Follow on Facebook</span>
+            <span>{m.follow_on_facebook()}</span>
           </a>
           <span class="hidden md:block flex-1 bg-gray-700 h-[0.5px]" />
         </>
@@ -51,11 +52,11 @@ const activeEventId = currentEventId ?? currentEvent?.id;
 
     <a
       class="flex gap-2 items-start"
-      href="mailto:hello@example.com"
+      href={`mailto:${m.contact_email()}`}
       target="_blank"
     >
       <Icon name="ph:envelope-simple" class="w-6 h-6 mt-1" />
-      hello@example.com
+      {m.contact_email()}
     </a>
     <span class="hidden md:block flex-1 bg-gray-700 h-[0.5px]"></span>
 
@@ -65,7 +66,7 @@ const activeEventId = currentEventId ?? currentEvent?.id;
       target="_blank"
     >
       <Icon name="ph:map-pin" class="w-6 h-6 mt-1" />
-      123 Main St, Your City
+      {m.contact_address()}
     </a>
   </div>
 </footer>

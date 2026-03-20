@@ -10,6 +10,7 @@ A production-ready starter template for recurring annual events (festivals, gath
 - **[Swup](https://swup.js.org)** — Smooth page transitions
 - **[Vercel](https://vercel.com)** — Hosting with Web Analytics
 - **[Umami](https://umami.is)** — Optional privacy-friendly analytics
+- **[Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)** — Type-safe i18n (EN/CS), cookie-based language switching
 - TypeScript, ESLint, Prettier, knip
 
 ## Project Structure
@@ -92,8 +93,9 @@ schedule:
 
 ### 4. Customize
 
-- **Site name / tagline**: `src/layouts/Layout.astro`, `src/components/MetaTags.astro`, page files
-- **Contact / location**: `src/components/Footer.astro`
+- **Site name / tagline / all UI strings**: `messages/en.json` and `messages/de.json`
+- **Add a language**: add a new locale to `project.inlang/settings.json` and create `messages/<locale>.json`
+- **Contact / location**: `messages/en.json` → `contact_email`, `contact_address`
 - **Organizer info for SEO**: `src/utils/schema.ts`
 - **Fonts**: `src/styles/global.css` (currently using Google Fonts: Playfair Display + Inter)
 
@@ -102,7 +104,7 @@ schedule:
 ```sh
 pnpm install      # Install dependencies
 pnpm dev          # Start dev server at localhost:4321
-pnpm build        # Build for production
+pnpm build        # Compile i18n messages + build for production
 pnpm preview      # Preview production build
 pnpm typecheck    # TypeScript check
 pnpm lint:check   # ESLint

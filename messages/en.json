@@ -1,0 +1,22 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "site_title": "My Site",
+  "site_subtitle": "A recurring event",
+  "edition": "Edition {number}",
+  "edition_page_title": "Edition {number} — {year}",
+  "photos_page_title": "Photos | Edition {number} — {year}",
+  "previous_editions": "Previous Editions",
+  "photos": "Photos",
+  "all_photos": "All photos",
+  "page_not_found": "Page not found",
+  "not_found_message": "We couldn't find this page.",
+  "back_to_home": "Back to home",
+  "follow_on_facebook": "Follow on Facebook",
+  "contact_email": "hello@example.com",
+  "contact_address": "123 Main St, Your City",
+  "image_lightbox": "Image lightbox",
+  "open_image_in_lightbox": "Open image {number} in lightbox",
+  "close": "Close",
+  "previous_image": "Previous image",
+  "next_image": "Next image"
+}

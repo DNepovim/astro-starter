@@ -1,5 +1,10 @@
 ---
-const SITE_NAME = "My Site";
+import { getLocale } from '@/paraglide/runtime'
+import * as m from '@/paraglide/messages'
+
+const SITE_NAME = m.site_title()
+const locale = getLocale()
+const ogLocale = locale === 'cs' ? 'cs_CZ' : 'en_US'
 
 type Props = {
   title: string;
@@ -18,7 +23,7 @@ const ogImage = Astro.props.image ? new URL(Astro.props.image, url).href : undef
 <meta property="og:title" content={title} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={url} />
-<meta property="og:locale" content="en_US" />
+<meta property="og:locale" content={ogLocale} />
 {description && <meta property="og:description" content={description} />}
 {ogImage && <meta property="og:image" content={ogImage} />}
 <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />

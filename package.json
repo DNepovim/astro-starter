@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "tsc",
@@ -13,7 +13,8 @@
     "format:check": "prettier --check '**/*.{ts,tsx,js,cjs,json,svg}'",
     "format:write": "prettier --write --cache 'src/**/*.{ts,tsx,js,cjs,json,svg}'",
     "check": "pnpm typecheck & pnpm format:check & pnpm lint:check & knip",
-    "knip": "knip"
+    "knip": "knip",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -25,7 +26,7 @@
     "@vercel/analytics": "^1.5.0",
     "@vercel/og": "^0.11.1",
     "astro": "5.6.1",
-"astro-icon": "^1.1.5",
+    "astro-icon": "^1.1.5",
     "narrowland": "^1.5.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.0.9",
@@ -50,6 +51,8 @@
     "schema-dts": "^1.1.5",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.47.0",
-    "vite": "^7.1.9"
+    "vite": "^7.1.9",
+    "@inlang/paraglide-js": "^2.15.0",
+    "@inlang/cli": "^3.0.0"
   }
 }

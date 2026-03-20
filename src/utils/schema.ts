@@ -1,12 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
-import type {
-  Event,
-  Offer,
-  Person,
-  Place,
-  PostalAddress,
-  WithContext,
-} from 'schema-dts'
+import type { Event, Offer, Person, Place, PostalAddress, WithContext } from 'schema-dts'
 
 type Performer = NonNullable<CollectionEntry<'events'>['data']['performers']>[number]
 type Member = NonNullable<Performer['member']>[number]

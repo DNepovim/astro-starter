@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 
 import Lightbox from '@/components/Lightbox.astro'
+import * as m from '@/paraglide/messages'
 
 type Props = {
   year: string
@@ -38,7 +39,7 @@ const imageUrls = event?.data.images ?? []
             ]}
             data-gallery={galleryId}
             data-index={index}
-            aria-label={`Open image ${String(index + 1)} in lightbox`}
+            aria-label={m.open_image_in_lightbox({ number: String(index + 1) })}
           >
             <img
               src={url}

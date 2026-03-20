@@ -12,5 +12,6 @@ export default {
     ],
     project: ['src/**/*'],
   },
+  ignore: ['src/paraglide/**/*'],
   ignoreDependencies: ['@iconify-json/ph', 'eslint-plugin-jsx-a11y'],
 } satisfies KnipConfig

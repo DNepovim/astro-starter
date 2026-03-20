@@ -1,25 +1,26 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import * as m from "@/paraglide/messages";
 ---
 
-<Layout title="Page not found">
+<Layout title={m.page_not_found()}>
   <header class="flex justify-between mb-52 relative">
     <a href="/" class="flex flex-col sm:gap-4 gap-1">
-      <span class="font-head sm:text-5xl text-[7vw]">My Site</span>
-      <span class="font-head sm:text-3xl text-[4vw]">A recurring event</span>
+      <span class="font-head sm:text-5xl text-[7vw]">{m.site_title()}</span>
+      <span class="font-head sm:text-3xl text-[4vw]">{m.site_subtitle()}</span>
     </a>
     <h1 class="flex flex-col sm:gap-4 gap-1 text-right">
       <span class="font-head sm:text-5xl text-[7vw]">404</span>
-      <span class="font-head sm:text-3xl text-[4vw]">Page not found</span>
+      <span class="font-head sm:text-3xl text-[4vw]">{m.page_not_found()}</span>
     </h1>
   </header>
   <div class="max-w-xl mx-auto px-4 flex flex-col gap-6">
-    <p class="font-head text-2xl sm:text-3xl">We couldn't find this page.</p>
+    <p class="font-head text-2xl sm:text-3xl">{m.not_found_message()}</p>
     <a
       href="/"
       class="text-lg underline underline-offset-4 hover:no-underline transition-all"
     >
-      Back to home
+      {m.back_to_home()}
     </a>
   </div>
 </Layout>

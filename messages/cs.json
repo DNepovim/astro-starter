@@ -1,0 +1,22 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "site_title": "My Site",
+  "site_subtitle": "Opakující se událost",
+  "edition": "Ročník {number}",
+  "edition_page_title": "Ročník {number} — {year}",
+  "photos_page_title": "Fotky | Ročník {number} — {year}",
+  "previous_editions": "Předchozí ročníky",
+  "photos": "Fotky",
+  "all_photos": "Všechny fotky",
+  "page_not_found": "Stránka nenalezena",
+  "not_found_message": "Tuto stránku se nepodařilo najít.",
+  "back_to_home": "Zpět na hlavní stránku",
+  "follow_on_facebook": "Sledovat na Facebooku",
+  "contact_email": "hello@example.com",
+  "contact_address": "123 Main St, Your City",
+  "image_lightbox": "Lightbox s obrázky",
+  "open_image_in_lightbox": "Otevřít obrázek {number} v lightboxu",
+  "close": "Zavřít",
+  "previous_image": "Předchozí obrázek",
+  "next_image": "Další obrázek"
+}

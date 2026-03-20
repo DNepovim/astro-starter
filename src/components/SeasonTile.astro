@@ -1,5 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getLocale } from "@/paraglide/runtime";
+import * as m from "@/paraglide/messages";
 
 type Props = {
   season: CollectionEntry<"events">;
@@ -8,6 +10,8 @@ type Props = {
 };
 
 const { season, isActive, editionNumber } = Astro.props;
+const locale = getLocale();
+const dateLocale = locale === 'cs' ? 'cs-CZ' : 'en-US';
 ---
 
 <a
@@ -31,7 +35,7 @@ const { season, isActive, editionNumber } = Astro.props;
     loading="lazy"
   />
   <p class="flex flex-col ml-2 gap-2 font-head -mt-11 relative">
-    <span class="text-3xl text-white">Edition {editionNumber}</span>
+    <span class="text-3xl text-white">{m.edition({ number: String(editionNumber) })}</span>
     <span
       class:list={[
         "text-xl",
@@ -40,7 +44,7 @@ const { season, isActive, editionNumber } = Astro.props;
           : "group-hover:text-white transition-colors duration-700",
       ]}
     >
-      {season.data.startDate.toLocaleDateString("en-US")}
+      {season.data.startDate.toLocaleDateString(dateLocale)}
     </span>
   </p>
 </a>
