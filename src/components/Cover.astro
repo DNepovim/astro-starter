@@ -1,4 +1,6 @@
 ---
+import { getLqipStyle } from '@/utils/lqip'
+
 type Props = {
   image: string
   title: string
@@ -7,6 +9,8 @@ type Props = {
 }
 
 const { image, title, subtitle, subsubtitle } = Astro.props
+
+const lqipStyle = await getLqipStyle(image)
 ---
 
 <img
@@ -14,6 +18,7 @@ const { image, title, subtitle, subsubtitle } = Astro.props
   alt=""
   id="cover-img"
   class="motion-opacity-in-0 motion-blur-in-xs motion-duration-1400 h-full w-full rounded-lg"
+  style={lqipStyle}
   width={1088}
   height={725}
   loading="eager"
